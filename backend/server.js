@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ПОДКЛЮЧЕНИЕ К MONGODB (замени <password> на свой)
+
 const mongoURI = process.env.MONGO_URI;
 mongoose.connect(mongoURI)
     .then(() => console.log("MongoDB подключена!"))
@@ -39,6 +39,18 @@ app.post('/api/save-stock', async (req, res) => {
 app.get('/api/stocks', async (req, res) => {
     const stocks = await Stock.find();
     res.json(stocks);
+});
+
+app.delete('/api/stocks/:id', async (req, res) => {
+    try {
+        const result = await Stock.findByIdAndDelete(req.params.id);
+        if (!result) {
+            return res.status(404).json({ error: "Акция не найдена" });
+        }
+        res.json({ message: "Акция успешно удалена" });
+    } catch (err) {
+        res.status(500).json({ error: "Ошибка при удалении из базы" });
+    }
 });
 
 app.listen(5000, () => console.log("Сервер на порту 5000"));

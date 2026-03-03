@@ -37,6 +37,18 @@ function App() {
     }
   };
 
+  const deleteStock = async (id) => {
+    if (window.confirm("Удалить эту акцию?")) {
+      try {
+        await axios.delete(`http://localhost:5000/api/stocks/${id}`);
+        // Фильтруем список в стейте, чтобы не делать лишний запрос к базе
+        setStocks(stocks.filter(stock => stock._id !== id));
+      } catch (err) {
+        alert("Ошибка при удалении");
+      }
+    }
+  };
+
   return (
     <div className="App">
       <h1>Мой Дивидендный Портфель</h1>
@@ -55,6 +67,7 @@ function App() {
             <th>Цена</th>
             <th>Дивиденд</th>
             <th>Доходность (%)</th>
+				<th>Действие</th>
           </tr>
         </thead>
         <tbody>
@@ -64,6 +77,14 @@ function App() {
               <td>${stock.price}</td>
               <td>${stock.dividend}</td>
               <td>{stock.yield}</td>
+				  <td>
+          <button 
+            onClick={() => deleteStock(stock._id)}
+            style={{ backgroundColor: '#ff4d4d', color: 'white', border: 'none', cursor: 'pointer', padding: '5px 10px' }}
+          >
+            Удалить
+          </button>
+        </td>
             </tr>
           ))}
         </tbody>
