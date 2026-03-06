@@ -10,7 +10,7 @@ function App() {
 
   // Функция для загрузки списка акций
   const fetchStocks = async () => {
-    const response = await axios.get('http://localhost:5000/api/stocks');
+    const response = await axios.get('https://dividend-app-7fgd.onrender.com/api/stocks');
     setStocks(response.data);
   };
 
@@ -22,7 +22,7 @@ function App() {
   const saveStock = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/save-stock', {
+      await axios.post('https://dividend-app-7fgd.onrender.com/api/save-stock', {
         ticker,
         price: Number(price),
         dividend: Number(dividend)
@@ -40,7 +40,7 @@ function App() {
   const deleteStock = async (id) => {
     if (window.confirm("Удалить эту акцию?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/stocks/${id}`);
+        await axios.delete(`https://dividend-app-7fgd.onrender.com/api/stocks/${id}`);
         // Фильтруем список в стейте, чтобы не делать лишний запрос к базе
         setStocks(stocks.filter(stock => stock._id !== id));
       } catch (err) {
