@@ -51,7 +51,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Мой Дивидендный Портфель</h1>
+      <h1>My Dividend Portfolio</h1>
       
       <form onSubmit={saveStock} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
         <input placeholder="Тикер" value={ticker} onChange={(e) => setTicker(e.target.value)} />
