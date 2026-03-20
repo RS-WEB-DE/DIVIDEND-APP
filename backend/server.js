@@ -9,7 +9,8 @@ app.use(cors());
 app.use(express.json());
 
 
-const mongoURI = process.env.MONGO_URI;
+const mongoURI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/dividend-app";
+
 mongoose.connect(mongoURI)
     .then(() => console.log("MongoDB connected!"))
     .catch(err => console.log("DB Error:", err));
